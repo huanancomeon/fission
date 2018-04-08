@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doc.xushi.mapper.GoodsMapper">
+
+    <select id="getGoodsCount" resultType="java.lang.Integer">
+
+          SELECT count(*) FROM t_goods WHERE valid =1
+
+    </select>
+
+    <select id="getGoodsList" resultType="com.doc.xushi.entity.po.GoodsPo"
+            parameterType="com.doc.xushi.entity.vo.PageVo">
+          SELECT
+              goods_id,
+              goods_name,
+              price
+          FROM  `t_goods`
+              ORDER BY goods_id
+              LIMIT #{index} ,#{pageSize}
+
+    </select>
+
+    <select id="getGoodsById" parameterType="java.lang.Long" resultType="com.doc.xushi.entity.po.GoodsPo">
+
+        SELECT
+            goods_id as goodsId,
+            goods_name as goodsName,
+            price FROM t_goods
+        WHERE goods_id =#{goodsId}
+
+    </select>
+
+    <select id="getGoodsByIdList" parameterType="java.util.List" resultType="com.doc.xushi.entity.po.GoodsPo">
+
+        SELECT
+        goods_id as goodsId,
+        goods_name as goodsName,
+        price FROM t_goods
+        WHERE goods_id in
+        <foreach collection="list" item="item" open="(" separator="," close="}">
+            #{item}
+        </foreach>
+
+    </select>
+
+    <update id="updateGoods" parameterType="com.doc.xushi.entity.po.GoodsPo">
+
+        update t_goods
+        <set>
+
+            <if test=" goodsName != null">
+                goods_name =#{goodsName},
+            </if>
+            <if test="price !=null">
+                price =#{price},
+            </if>
+        </set>
+        where goods_id =#{goodsId}
+
+    </update>
+</mapper>

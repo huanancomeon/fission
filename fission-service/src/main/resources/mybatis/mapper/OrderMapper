@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        <mapper namespace="com.doc.xushi.mapper.OrderMapper">
+
+
+    <insert id="addOrder" useGeneratedKeys="true" keyProperty="orderId" parameterType="com.doc.xushi.entity.po.OrderPo">
+        INSERT INTO `t_order`
+                    (`order_id`,
+                     `user_id`,
+                     `remark`,
+                     `address_id`,
+                      money,
+                     `mail_no`,
+                     `mail_company`,
+                     `status`,
+                     `create_time`,
+                     `update_time`)
+        VALUES (#{orderId},
+                #{userId},
+                #{remark},
+                #{addressId},
+                #{money},
+                #{mailNo},
+                #{mailCompany},
+                1,
+                now(),
+                nwo())
+    </insert>
+
+    <update id="updateOrder" parameterType="com.doc.xushi.entity.po.OrderPo">
+
+        UPDATE `t_order`
+        <set>
+            <if test="mailNo!=null">
+                `mail_no` =#{mailNo},
+            </if>
+            <if test="mailCompany!=null">
+                `mail_company` = #{mailCompany},
+            </if>
+            <if test="status">
+                `status` = #{status},
+            </if>
+            `update_time` = now()
+        </set>
+        WHERE `order_id` = #{orderId}
+    </update>
+
+    <select id="getMyOrderList" parameterType="com.doc.xushi.entity.vo.PageVo" resultType="com.doc.xushi.entity.po.OrderPo">
+        SELECT
+          `order_id`,
+          `user_id`,
+          `remark`,
+          `address_id`,
+           money,
+          `mail_no`,
+          `mail_company`,
+          `status`,
+          `create_time`,
+          `update_time`
+        FROM `t_order`
+        where user_id =#{userId}
+        order by create_time desc
+         LIMIT #{index} ,#{pageSize}
+    </select>
+
+    <select id="getOrderGoods" parameterType="java.util.List" resultType="com.doc.xushi.entity.po.OrderGoodsPo">
+        SELECT
+        `order_id`,
+        `goods_id`,
+        `goods_count`,
+        `price`
+        FROM `t_order_goods` where `order_id` in
+        <foreach collection="list" item="item" open="(" separator="," close="}">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="insertOrderGoods" parameterType="java.util.List">
+        INSERT INTO `fission`.`t_order_goods`
+            (
+             `order_id`,
+             `goods_id`,
+              price,
+              goods_count,
+             `create_time`)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.order_id},
+            #{item.order_id},
+            #{item.price},
+            #{item.count},
+            now())
+        </foreach>
+    </insert>
+</mapper>

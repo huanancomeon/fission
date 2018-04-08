@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doc.xushi.mapper.ShoppingCartMapper">
+
+    <insert id="add2MyCart" useGeneratedKeys="true" keyProperty="cartId" parameterType="com.doc.xushi.entity.po.CartPo">
+            INSERT INTOt_shopping_cart (
+              user_id,
+              goods_id,
+              amount,
+              create_time,
+              update_time
+            ) 
+            VALUES
+              (
+                #{userId},
+                #{goodsId},
+                #{amount},
+                NOW(),
+                NOW(),
+              )
+    </insert>
+    
+    <update id="updateMyCart" parameterType="com.doc.xushi.entity.po.CartPo">
+        UPDATE fission.t_shopping_cart
+        <set>
+            <if test="amount !=null" >
+                amount = 'amount',
+            </if>
+            <if test="valid!=null">
+                valid = 'valid',
+            </if>
+            update_time = now()
+        </set>
+        WHERE cart_id = #{cartId} and user_id=#{userId}
+    </update>
+
+    <select id="getMyCartList" parameterType="java.lang.Long" resultType="com.doc.xushi.entity.po.CartPo">
+        SELECT
+          cart_id,
+          user_id,
+          goods_id,
+          amount,
+          valid
+        FROM t_shopping_cart
+        where user_id =#{userId} and valid =1
+        ORDER by create_time desc
+        LIMIT 0, 100
+
+    </select>
+
+</mapper>
