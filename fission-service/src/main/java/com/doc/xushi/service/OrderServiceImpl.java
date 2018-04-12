@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class OrderServiceImpl {
     @Autowired
     GoodsMapper goodsMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     public void addOrder(OrderPo orderPo) throws Exception {
         if (orderPo == null || CollectionUtils.isEmpty(orderPo.getGoodsList())) {
             LOGGER.error("订单参数异常：订单信息：{}", JSON.toJSONString(orderPo));
