@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ShoppingCartMapper {
 
-    CartPo add2MyCart(CartPo cart);
+    int add2MyCart(CartPo cart);
 
     List<CartPo> getMyCartList(Long userId);
 

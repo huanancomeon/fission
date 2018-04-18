@@ -3,7 +3,7 @@
 <mapper namespace="com.doc.xushi.mapper.ShoppingCartMapper">
 
     <insert id="add2MyCart" useGeneratedKeys="true" keyProperty="cartId" parameterType="com.doc.xushi.entity.po.CartPo">
-            INSERT INTOt_shopping_cart (
+            INSERT INTO t_shopping_cart (
               user_id,
               goods_id,
               amount,
@@ -16,7 +16,7 @@
                 #{goodsId},
                 #{amount},
                 NOW(),
-                NOW(),
+                NOW()
               )
     </insert>
     

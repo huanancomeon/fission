@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface OrderMapper {
 
-    OrderPo addOrder(OrderPo order);
+    int addOrder(OrderPo order);
 
     int updateOrder(OrderPo order);
 
