@@ -35,7 +35,7 @@ public class OrderServiceImpl {
     GoodsMapper goodsMapper;
 
     @Transactional(rollbackFor = Exception.class)
-    public void addOrder(OrderPo orderPo) throws Exception {
+    public void createOrder(OrderPo orderPo) throws Exception {
         if (orderPo == null || CollectionUtils.isEmpty(orderPo.getGoodsList())) {
             LOGGER.error("订单参数异常：订单信息：{}", JSON.toJSONString(orderPo));
             throw new Exception("订单参数异常");
