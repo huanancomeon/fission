@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by 5000 on 2018/4/6.
  */
@@ -47,7 +49,7 @@ public class ShoppingCartController extends BaseController {
     }
 
     @RequestMapping("/my")
-    public ResponseEntity<String> shoppingCartInfo(Long userId) {
+    public ResponseEntity<String> shoppingCartInfo(@NotNull Long userId) {
         if (userId == null) {
             return responseParamError();
         }
