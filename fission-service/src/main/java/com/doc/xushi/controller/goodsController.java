@@ -1,5 +1,6 @@
 package com.doc.xushi.controller;
 
+import com.doc.xushi.annotation.Auth;
 import com.doc.xushi.entity.po.GoodsPo;
 import com.doc.xushi.entity.vo.PageResultVo;
 import com.doc.xushi.service.GoodsServiceImpl;
@@ -38,6 +39,7 @@ public class goodsController extends BaseController {
         }
     }
 
+    @Auth
     @RequestMapping("/info/{goodsId}")
     public ResponseEntity<String> getGoodsById(@PathVariable("goodsId") Long goodsId) {
 
