@@ -16,30 +16,18 @@ import java.util.Arrays;
 public class WXTockenController {
 
 
-    public String check(String echoStr, String signature, String timestamp, String nonce) {
-
-
-        if (checkSignature(signature,timestamp,nonce)) {
-
-            return echoStr;
-        }
-
-        return "";
-    }
-
-
-    private boolean checkSignature(String signature,String timestamp,String nonce)
-    {
-        String Token = "12345678";
-        String[] ArrTmp = { Token, timestamp, nonce };
+    @RequestMapping("/check")
+    public String checkSignature(String echoStr, String signature, String timestamp, String nonce) {
+        String Token = "pc8y4m5Ne";
+        String[] ArrTmp = {Token, timestamp, nonce};
         Arrays.sort(ArrTmp);
         String tmpStr = String.join("", ArrTmp);
         tmpStr = SHA1.encode(tmpStr);
         tmpStr = tmpStr.toLowerCase();
         if (tmpStr.equals(signature)) {
-            return true;
-        } else {
-            return false;
+            return echoStr;
         }
+        return "";
     }
+
 }
