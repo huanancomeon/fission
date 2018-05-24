@@ -17,7 +17,7 @@ public class WXTockenController {
 
 
     @RequestMapping("/check")
-    public String checkSignature(String echoStr, String signature, String timestamp, String nonce) {
+    public String checkSignature(String echostr, String signature, String timestamp, String nonce) {
         String Token = "pc8y4m5Ne";
         String[] ArrTmp = {Token, timestamp, nonce};
         Arrays.sort(ArrTmp);
@@ -25,9 +25,9 @@ public class WXTockenController {
         tmpStr = SHA1.encode(tmpStr);
         tmpStr = tmpStr.toLowerCase();
         if (tmpStr.equals(signature)) {
-            return echoStr;
+            return echostr;
         }
-        return "";
+        return "error";
     }
 
 }
