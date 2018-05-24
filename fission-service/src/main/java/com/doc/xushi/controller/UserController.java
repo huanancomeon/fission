@@ -81,11 +81,12 @@ public class UserController extends BaseController {
             String userInfo = restTemplate.getForObject(userInfoUrl, String.class);
 
             LOGGER.info("getUserInfo:{}",userInfo);
+            return responseOK(userInfo);
         } catch (Exception e) {
             LOGGER.error("getAuthCode error",e);
         }
 
-        return responseOK();
+        return responseError();
     }
 
 
